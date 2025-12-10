@@ -1,0 +1,55 @@
+
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<h2>Manage Projects</h2>
+<form class="form" method="post" enctype="multipart/form-data" 
+      style="max-width: 500px; margin: 30px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9; font-family: Arial, sans-serif;">
+  
+  <label style="display: block; margin-bottom: 10px; font-weight: bold;">
+    Project Name
+    <input type="text" name="name" required 
+           style="display: block; width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" />
+  </label>
+  
+  <label style="display: block; margin-bottom: 10px; font-weight: bold;">
+    Description
+    <textarea name="description" required
+              style="display: block; width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px; resize: vertical;"></textarea>
+  </label>
+  
+  <label style="display: block; margin-bottom: 10px; font-weight: bold;">
+    Image
+    <input type="file" name="image" accept="image/*"
+           style="display: block; margin-top: 5px;" />
+  </label>
+  
+  <button type="submit" 
+          style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px;">
+    Add Project
+  </button>
+
+</form>
+
+
+<h3>All Projects</h3>
+<div class="grid">
+  {% for p in projects %}
+    <div class="card">
+      {% if p.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' ~ p.image_filename) }}" alt="{{ p.name }}" />
+      {% else %}
+        <img src="{{ url_for('static', filename='img/project-default.jpg') }}" alt="{{ p.name }}" />
+      {% endif %}
+      <div class="card-body">
+        <h4>{{ p.name }}</h4>
+        <p>{{ p.description }}</p>
+        <form method="post" action="{{ url_for('delete_project', pid=p.id) }}">
+          <button class="btn danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  {% else %}
+    <p class="muted">No projects yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

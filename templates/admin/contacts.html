@@ -1,0 +1,31 @@
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<h2>Contact Form Responses</h2>
+<table class="table" cellpadding="10">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Full Name</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th>City</th>
+      <th>Submitted At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for r in contacts %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.full_name }}</td>
+        <td>{{ r.email }}</td>
+        <td>{{ r.mobile }}</td>
+        <td>{{ r.city }}</td>
+        <td>{{ r.created_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="6">No responses yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

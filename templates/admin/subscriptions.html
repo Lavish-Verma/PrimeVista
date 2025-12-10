@@ -1,0 +1,26 @@
+
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<h2>Subscribed Emails</h2>
+<table class="table" cellpadding="10">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Email</th>
+      <th>Subscribed At</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in subs %}
+      <tr>
+        <td>{{ s.id }}</td>
+        <td>{{ s.email }}</td>
+        <td>{{ s.created_at }}</td>
+      </tr>
+    {% else %}
+      <tr><td colspan="3">No subscriptions yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

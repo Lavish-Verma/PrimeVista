@@ -1,0 +1,17 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<section class="section">
+  <div class="container admin-nav">
+    <a class="btn" href="{{ url_for('admin_projects') }}">Projects</a>
+    <a class="btn" href="{{ url_for('admin_clients') }}">Clients</a>
+    <a class="btn" href="{{ url_for('admin_contacts') }}">Contacts</a>
+    <a class="btn" href="{{ url_for('admin_subscriptions') }}">Subscriptions</a>
+  </div>
+</section>
+<section class="section">
+  <div class="container admin-content">
+    {% block admin_content %}{% endblock %}
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,62 @@
+
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<h2>Manage Clients</h2>
+<form class="form" method="post" enctype="multipart/form-data"
+      style="max-width: 500px; margin: 30px auto; padding: 25px; border: 1px solid #ccc; border-radius: 10px; background-color: #f9f9f9; font-family: Arial, sans-serif;">
+
+  <label style="display: block; margin-bottom: 15px; font-weight: bold;">
+    Client Name
+    <input type="text" name="name" required
+           style="display: block; width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;" />
+  </label>
+
+  <label style="display: block; margin-bottom: 15px; font-weight: bold;">
+    Designation
+    <input type="text" name="designation" placeholder="e.g., CEO" required
+           style="display: block; width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px;" />
+  </label>
+
+  <label style="display: block; margin-bottom: 15px; font-weight: bold;">
+    Description
+    <textarea name="description" required
+              style="display: block; width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; resize: vertical;"></textarea>
+  </label>
+
+  <label style="display: block; margin-bottom: 20px; font-weight: bold;">
+    Image
+    <input type="file" name="image" accept="image/*"
+           style="display: block; margin-top: 5px;" />
+  </label>
+
+  <button type="submit"
+          style="width: 100%; padding: 12px; background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">
+    Add Client
+  </button>
+
+</form>
+
+
+<h3>All Clients</h3>
+<div class="grid">
+  {% for c in clients %}
+    <div class="card">
+      {% if c.image_filename %}
+        <img src="{{ url_for('static', filename='uploads/' ~ c.image_filename) }}" alt="{{ c.name }}" />
+      {% else %}
+        <img src="{{ url_for('static', filename='img/client-default.jpg') }}" alt="{{ c.name }}" />
+      {% endif %}
+      <div class="card-body">
+        <h4>{{ c.name }}</h4>
+        <small class="muted">{{ c.designation }}</small>
+        <p>{{ c.description }}</p>
+        <form method="post" action="{{ url_for('delete_client', cid=c.id) }}">
+          <button class="btn danger" type="submit">Delete</button>
+        </form>
+      </div>
+    </div>
+  {% else %}
+    <p class="muted">No clients yet.</p>
+  {% endfor %}
+</div>
+{% endblock %}

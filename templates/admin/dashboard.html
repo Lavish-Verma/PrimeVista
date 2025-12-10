@@ -1,0 +1,12 @@
+
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<h2>Admin Dashboard</h2>
+<ul class="stats">
+  <li><strong>Projects:</strong> {{ counts.projects }}</li>
+  <li><strong>Clients:</strong> {{ counts.clients }}</li>
+  <li><strong>Contacts:</strong> {{ counts.contacts }}</li>
+  <li><strong>Subscriptions:</strong> {{ counts.subscriptions }}</li>
+</ul>
+<p>Use the buttons above to manage content.</p>
+{% endblock %}

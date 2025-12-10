@@ -1,0 +1,67 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ title if title else 'PrimeVista' }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <a class="logo" href="/">PrimeVista</a>
+      </div>
+      <nav class="main-nav">
+        <a class="active" href="/">Home</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Our Projects</a>
+        <a href="#clients">Testimonials</a>
+        <a class="btn small" href="#contact">Contact</a>
+        <a class="admin-link" href="{{ url_for('admin_dashboard') }}">Admin</a>
+      </nav>
+    </div>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-wrap container">
+        {% for category, msg in messages %}
+          <div class="flash {{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="cta-band">
+      <div class="container cta-inner">
+        <h3>Learn more about our listing process and staging.</h3>
+        <a class="btn outline-light" href="#services">Learn More</a>
+      </div>
+    </div>
+    <div class="footer-nav container">
+      <nav>
+        <a href="#">Home</a>
+        <a href="#services">Services</a>
+        <a href="#projects">Projects</a>
+        <a href="#clients">Testimonials</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <form class="form-inline" method="post" action="{{ url_for('subscribe') }}">
+        <input type="email" name="email" placeholder="Subscribe to newsletter" required />
+        <button class="btn" type="submit">Subscribe</button>
+      </form>
+    </div>
+    <div class="sub-footer">
+      <div class="container">&copy; {{ 2025 }} PrimeVista • All Rights Reserved</div>
+    </div>
+  </footer>
+</body>
+</html>

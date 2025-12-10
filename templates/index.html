@@ -1,0 +1,153 @@
+
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- HERO (uses hero.jpg) with right-side consultation form -->
+<section class="hero" style="background-image:url('{{ url_for('static', filename='img/hero.jpg') }}');">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <h1>Consultation,<br/> Design, &amp; Marketing</h1>
+      <p>We combine thoughtful design with data-driven marketing to deliver exceptional results.</p>
+    </div>
+
+    <div class="hero-form-card" style="margin-bottom: 20px;">
+      <h4>Get a Free Consultation</h4>
+      <form class="form" method="post" action="{{ url_for('contact_submit') }}">
+        <label>Full Name
+          <input type="text" name="full_name" required />
+        </label>
+        <label>Email Address
+          <input type="email" name="email" required />
+        </label>
+        <label>Mobile Number
+          <input type="text" name="mobile" required />
+        </label>
+        <label>City
+          <input type="text" name="city" required />
+        </label>
+        <button class="btn accent" type="submit" style="margin-top: 20px;">Get Free Quote</button>
+      </form>
+    </div>
+  </div>
+  <div class="hero-decor"></div>
+</section>
+
+<!-- Services / Feature band with circular photos -->
+<section id="services" class="feature-band">
+  <div class="container feature-grid">
+    <div class="feature-text">
+      <h3>Not Your Average Realtor</h3>
+      <p>Real insights, modern marketing, and design-forward execution. We guide decisions through strategy and craft.</p>
+    </div>
+    <div class="feature-photos">
+      <div class="photo-ring"><img src="{{ url_for('static', filename='img/prolady.jpg') }}" alt="Professional"/></div>
+      <div class="photo-ring"><img src="{{ url_for('static', filename='img/gd.jpg') }}" alt="Team"/></div>
+      <div class="photo-ring"><img src="{{ url_for('static', filename='img/workingman.jpg') }}" alt="Work"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="why">
+  <div class="container">
+    <h3 class="section-title">Why Choose Us?</h3>
+    <div class="icon-cards">
+      <div class="icon-card">
+        <h4>Potential ROI</h4>
+        <p>Strategic planning and transparent metrics to maximize your return.</p>
+      </div>
+      <div class="icon-card">
+        <h4>Design</h4>
+        <p>Clean, modern design that elevates your brand and drives engagement.</p>
+      </div>
+      <div class="icon-card">
+        <h4>Marketing</h4>
+        <p>Performance-focused campaigns built on research and creativity.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About band (uses groupds.jpg) -->
+<section class="about">
+  <div class="container about-inner">
+    <div class="about-photos">
+      <img src="{{ url_for('static', filename='img/groupds.jpg') }}" alt="Presentation" />
+    </div>
+    <div class="about-copy">
+      <h3>About Us</h3>
+      <p>Years of experience, excellent customer service, and commitment to quality. We build relationships by communicating effectively.</p>
+      <a class="btn" href="#projects">Learn More</a>
+    </div>
+  </div>
+</section>
+
+<!-- Our Projects (from DB; fallback project-default.jpg) -->
+<section id="projects" class="section projects">
+  <div class="container">
+    <h3 class="section-title">Our Projects</h3>
+    <div class="grid">
+      {% for p in projects %}
+        <div class="card project">
+          {% if p.image_filename %}
+            <img src="{{ url_for('static', filename='uploads/' ~ p.image_filename) }}" alt="{{ p.name }}" />
+          {% else %}
+            <img src="{{ url_for('static', filename='img/project-default.jpg') }}" alt="{{ p.name }}" />
+          {% endif %}
+          <div class="card-body">
+            <div class="card-top">
+              <span class="badge">Consultation</span>
+            </div>
+            <h4>{{ p.name }}</h4>
+            <p>{{ p.description }}</p>
+            <button class="btn accent small" disabled>Read More</button>
+          </div>
+        </div>
+      {% else %}
+        <p class="muted">No projects yet. Add some in the Admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Happy Clients (from DB; fallback client-default.jpg) -->
+<section id="clients" class="section clients">
+  <div class="container">
+    <h3 class="section-title">Happy Clients</h3>
+    <div class="client-row">
+      {% for c in clients %}
+        <div class="client-card">
+          <div class="client-avatar">
+            {% if c.image_filename %}
+              <img src="{{ url_for('static', filename='uploads/' ~ c.image_filename) }}" alt="{{ c.name }}" />
+            {% else %}
+              <img src="{{ url_for('static', filename='img/client-default.jpg') }}" alt="{{ c.name }}" />
+            {% endif %}
+          </div>
+          <div class="client-copy">
+            <p>“{{ c.description }}”</p>
+            <div class="client-meta">
+              <strong>{{ c.name }}</strong>
+              <span class="muted">{{ c.designation }}</span>
+            </div>
+          </div>
+        </div>
+      {% else %}
+        <p class="muted">No clients yet. Add some in the Admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section id="contact" class="section newsletter alt">
+  <div class="container">
+    <h3 class="section-title">Subscribe to Our Newsletter</h3>
+    <form class="form-inline" method="post" action="{{ url_for('subscribe') }}">
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+{% endblock %}
