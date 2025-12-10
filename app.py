@@ -318,15 +318,14 @@ def admin_subscriptions():
     conn.close()
     return render_template('admin/subscriptions.html', subs=subs, title='Subscriptions · PrimeVista')
 
-# ---------------------- CLI helper ----------------------
-if __name__ == '__main__':
-    import sys
+# ---------------------- AUTO DB INIT ----------------------
+if not os.path.exists(DB_PATH):
+    print("Initializing DB...")
+    init_db()
+
+# ---------------------- LOCAL RUN ----------------------
+if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
-    if '--init-db' in sys.argv:
-        init_db()
-        print('Database initialized at', DB_PATH)
-    else:
-        if not os.path.exists(DB_PATH):
-            init_db()
+
 
