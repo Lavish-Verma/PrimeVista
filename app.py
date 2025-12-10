@@ -321,6 +321,8 @@ def admin_subscriptions():
 # ---------------------- CLI helper ----------------------
 if __name__ == '__main__':
     import sys
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
     if '--init-db' in sys.argv:
         init_db()
         print('Database initialized at', DB_PATH)
